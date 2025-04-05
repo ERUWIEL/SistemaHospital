@@ -1,0 +1,8 @@
+persistencias\PersistenciaConsultas.class
+interfaz\IPersistenciaFachada.class
+persistencias\PersistenciaEspecialidades.class
+GUI\SistemaHospital.class
+persistencias\PersistenciaInventarios.class
+persistencias\PersistenciaPacientes.class
+persistencias\PersistenciaFachada.class
+persistencias\PersistenciaMedicos.class
