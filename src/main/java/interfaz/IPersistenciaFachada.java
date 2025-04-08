@@ -35,11 +35,12 @@ public interface IPersistenciaFachada {
     /**
      * Metodo que permite consultar todos los pacientes de la persistencia
      * @return 
+     * @throws java.io.IOException 
      */
-    abstract List<Paciente> listarPacientes();
-    abstract List<Paciente> listarPacientes(String direccion);
-    abstract List<Paciente> listarPacientes(int edadInicial, int edadFinal);
-    abstract List<Paciente> listarPacientes(String direccion, int edadInicial, int edadFinal);
+    abstract List<Paciente> listarPacientes()throws IOException;
+    abstract List<Paciente> listarPacientes(String direccion)throws IOException;
+    abstract List<Paciente> listarPacientes(int edadInicial, int edadFinal)throws IOException;
+    abstract List<Paciente> listarPacientes(String direccion, int edadInicial, int edadFinal)throws IOException;
     
     //Definicion de los metodos sobre medicos
     /**
@@ -114,15 +115,15 @@ public interface IPersistenciaFachada {
      * @param cantidad
      * @return 
      * @throws java.io.IOException 
-     * @throws excepciones.ObjetoInexistenteException 
      */
-    abstract List<EquipoMedico> consultarInventario(int cantidad)throws IOException, ObjetoInexistenteException;
+    abstract List<EquipoMedico> consultarInventario(int cantidad)throws IOException;
     
     /**
      * 
      * @return 
+     * @throws java.io.IOException 
      */
-    abstract List<EquipoMedico> consultarInventario();
+    abstract List<EquipoMedico> consultarInventario()throws IOException;
     
     //Definicion de los metodos sobre consultas
     /**

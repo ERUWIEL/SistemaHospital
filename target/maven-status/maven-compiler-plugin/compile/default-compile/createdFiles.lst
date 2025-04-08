@@ -1,10 +1,10 @@
 excepciones/ObjetoInexistenteException.class
 persistencias/PersistenciaInventarios.class
+persistencias/PersistenciaFachada.class
+persistencias/PersistenciaEspecialidades.class
 persistencias/PersistenciaConsultas.class
 persistencias/PersistenciaPacientes.class
 persistencias/PersistenciaMedicos.class
-persistencias/PersistenciaFachada.class
 excepciones/ObjetoExistenteException.class
-persistencias/PersistenciaEspecialidades.class
 GUI/SistemaHospital.class
 interfaz/IPersistenciaFachada.class

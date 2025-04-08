@@ -19,12 +19,15 @@ import persistencias.PersistenciaPacientes;
 public class PersistenciaFachada implements IPersistenciaFachada {
     
     //Pacientes
+    PersistenciaPacientes persistenciaPacientes = new PersistenciaPacientes();
+    PersistenciaMedicos persistenciaMedicos = new PersistenciaMedicos();
+    PersistenciaEspecialidades persistenciaEspecialidad = new PersistenciaEspecialidades();
+    PersistenciaInventarios persistenciaInventarios = new PersistenciaInventarios();
     
     @Override
     public void agregarPaciente(Paciente paciente) throws ObjetoExistenteException, IOException {
-        PersistenciaPacientes persistencia = new PersistenciaPacientes();
-        if(persistencia.consultarPacienteId(paciente.getId()) == null){
-        agregarPaciente(paciente);
+        if(persistenciaPacientes.consultarPacienteId(paciente.getId()) == null){
+        persistenciaPacientes.agregarPaciente(paciente);
         }else{
             throw new ObjetoExistenteException("El id de este paciente ya está en uso");
         }
@@ -32,32 +35,31 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public Paciente obtenerPacientePorId(int id) throws ObjetoInexistenteException, IOException{
-        PersistenciaPacientes persistencia = new PersistenciaPacientes();
-        if(persistencia.consultarPacienteId(id) == null){
-            return persistencia.consultarPacienteId(id);
+        if(persistenciaPacientes.consultarPacienteId(id) == null){
+            return persistenciaPacientes.consultarPacienteId(id);
         }else{
             throw new ObjetoInexistenteException("Id del paciente no encontrado");
         }
     }
 
     @Override
-    public List<Paciente> listarPacientes() {
-        return listarPacientes();
+    public List<Paciente> listarPacientes() throws IOException{
+        return persistenciaPacientes.listarPacientes();
     }
 
     @Override
-    public List<Paciente> listarPacientes(String direccion) {
-        return listarPacientes(direccion);
+    public List<Paciente> listarPacientes(String direccion) throws IOException{
+        return persistenciaPacientes.listarPacientes(direccion);
     }
     
     @Override
-    public List<Paciente> listarPacientes(int edadInicial, int edadFinal) {
-        return listarPacientes(edadInicial, edadFinal);
+    public List<Paciente> listarPacientes(int edadInicial, int edadFinal)throws IOException {
+        return persistenciaPacientes.listarPacientes(edadInicial, edadFinal);
     }
     
     @Override
-    public List<Paciente> listarPacientes(String direccion, int edadInicial, int edadFinal) {
-        return listarPacientes(direccion, edadInicial, edadFinal);
+    public List<Paciente> listarPacientes(String direccion, int edadInicial, int edadFinal)throws IOException {
+        return persistenciaPacientes.listarPacientes(direccion, edadInicial, edadFinal);
     }
     
     
@@ -65,9 +67,8 @@ public class PersistenciaFachada implements IPersistenciaFachada {
     
     @Override
     public void agregarMedico(Medico medico) throws ObjetoExistenteException, IOException{
-        PersistenciaMedicos persistencia = new PersistenciaMedicos();
-        if(persistencia.consultarMedicoId(medico.getId()) == null){
-            agregarMedico(medico);
+        if(persistenciaMedicos.consultarMedicoId(medico.getId()) == null){
+            persistenciaMedicos.agregarMedico(medico);
         }else{
             throw new ObjetoExistenteException("El id de este medico ya está en uso");
         }
@@ -75,9 +76,8 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public Medico obtenerMedicoPorId(int id) throws IOException, ObjetoInexistenteException {
-        PersistenciaMedicos persistencia = new PersistenciaMedicos();
-        if(persistencia.consultarMedicoId(id) == null){
-            return persistencia.consultarMedicoId(id);
+        if(persistenciaMedicos.consultarMedicoId(id) == null){
+            return persistenciaMedicos.consultarMedicoId(id);
         }else{
             throw new ObjetoInexistenteException("Id del medico no encontrado");
         }
@@ -85,9 +85,8 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public void agregarEspecialidad(Especialidad especialidad) throws ObjetoExistenteException {
-                PersistenciaEspecialidades persistencia = new PersistenciaEspecialidades();
-        if(persistencia.consultarEspecialidadId(especialidad.getId()) == null){
-            agregarEspecialidad(especialidad);
+        if(persistenciaEspecialidad.consultarEspecialidadId(especialidad.getId()) == null){
+            persistenciaEspecialidad.agregarEspecialidad(especialidad);
         }else{
             throw new ObjetoExistenteException("El id de esta especialidad ya está en uso");
         }
@@ -95,10 +94,8 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public Especialidad obtenerEspecialidadPorId(int id) throws ObjetoInexistenteException {
-        
-        PersistenciaEspecialidades persistencia = new PersistenciaEspecialidades();
-        if(persistencia.consultarEspecialidadId(id) == null){
-            return persistencia.consultarEspecialidadId(id);
+        if(persistenciaEspecialidad.consultarEspecialidadId(id) == null){
+            return persistenciaEspecialidad.consultarEspecialidadId(id);
         }else{
             throw new ObjetoInexistenteException("Id del paciente no encontrado");
         }
@@ -106,9 +103,8 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public void agregarEquipoMedico(EquipoMedico equipo) throws ObjetoExistenteException, IOException {
-        PersistenciaInventarios persistencia = new PersistenciaInventarios();
-        if(persistencia.consultarEquipoMedicoId(equipo.getId()) == null){
-            agregarEquipoMedico(equipo);
+        if(persistenciaInventarios.consultarEquipoMedicoId(equipo.getId()) == null){
+            persistenciaInventarios.agregarEquipoMedico(equipo);
         }else{
             throw new ObjetoExistenteException("El id de este equipo medico ya está en uso");
         }
@@ -116,41 +112,38 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public void inventariarEquipo(int id, int cantidad) throws ObjetoInexistenteException, IOException {
-        PersistenciaInventarios inventarios = null;
         EquipoMedico equipoNuevo = consultarEquipoMedicoId(id);
         equipoNuevo.setCantidad(cantidad + equipoNuevo.getCantidad());
-        inventarios.actualizarInventario(equipoNuevo);
+        persistenciaInventarios.actualizarInventario(equipoNuevo);
     }
     
     @Override
     public void desinventariarEquipo(int id, int cantidad) throws ObjetoInexistenteException, IOException {
-        PersistenciaInventarios inventarios = null;
         EquipoMedico equipoNuevo = consultarEquipoMedicoId(id);
         if(cantidad - equipoNuevo.getCantidad() >= 0){
             equipoNuevo.setCantidad(cantidad - equipoNuevo.getCantidad());
-            inventarios.actualizarInventario(equipoNuevo);
+            persistenciaInventarios.actualizarInventario(equipoNuevo);
         }
 
     }
 
     @Override
     public EquipoMedico consultarEquipoMedicoId(int id) throws ObjetoInexistenteException, IOException {
-               PersistenciaInventarios persistencia = new PersistenciaInventarios();
-        if(persistencia.consultarEquipoMedicoId(id) == null){
-            return persistencia.consultarEquipoMedicoId(id);
+        if(persistenciaInventarios.consultarEquipoMedicoId(id) == null){
+            return persistenciaInventarios.consultarEquipoMedicoId(id);
         }else{
             throw new ObjetoInexistenteException("Id del equipo medico no encontrado");
         }
     }
     
         @Override
-    public List<EquipoMedico> consultarInventario(int cantidad) {
-        return consultarInventario(cantidad);
+    public List<EquipoMedico> consultarInventario(int cantidad) throws IOException {
+        return persistenciaInventarios.consultarInventario(cantidad);
     }
     
         @Override
-    public List<EquipoMedico> consultarInventario() {
-        return consultarInventario();
+    public List<EquipoMedico> consultarInventario() throws IOException {
+        return persistenciaInventarios.consultarInventario();
     }
 
     @Override

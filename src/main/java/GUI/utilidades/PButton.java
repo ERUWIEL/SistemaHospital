@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * clase de utilidad que ahorrara codigo Panel Button, es un panel que actua como boton PButton!
  */
 public class PButton extends JPanel {
-    private Color colorBoton = new Color(4, 14, 79);
+    private Color colorBoton = new Color(173, 216, 230);
 
     /**
      * recibe la ruta del icono y opcionalmente del titulo del icono para mostrarse

@@ -1,4 +1,8 @@
 /home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/GUI/SistemaHospital.java
+/home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/GUI/utilidades/PButton.java
+/home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/GUI/utilidades/PMenuConsultas.java
+/home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/GUI/utilidades/PMenuMedicos.java
+/home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/GUI/utilidades/PMenuPacientes.java
 /home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/excepciones/ObjetoExistenteException.java
 /home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/excepciones/ObjetoInexistenteException.java
 /home/luishonshon/Documents/GitProjects/SistemaHospital/src/main/java/interfaz/IPersistenciaFachada.java
