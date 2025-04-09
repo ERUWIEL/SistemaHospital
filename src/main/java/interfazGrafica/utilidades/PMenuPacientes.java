@@ -28,9 +28,9 @@ public class PMenuPacientes extends JPanel {
         // botones de opciones
         JPanel pnlOpciones = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         pnlOpciones.setOpaque(false);
-        PButton btnAgregar = new PButton("Agregar Pacientes");
-        PButton btnBuscar = new PButton("Buscar Pacientes");
-        PButton btnListar = new PButton("Listar Pacientes");
+        PButton btnAgregar = new PButton("Agregar");
+        PButton btnBuscar = new PButton("Buscar");
+        PButton btnListar = new PButton("Listar");
         pnlOpciones.add(btnAgregar);
         pnlOpciones.add(btnBuscar);
         pnlOpciones.add(btnListar);

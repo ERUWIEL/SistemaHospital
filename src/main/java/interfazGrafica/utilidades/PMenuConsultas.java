@@ -28,8 +28,8 @@ public class PMenuConsultas extends JPanel {
         // botones de opciones
         JPanel pnlOpciones = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         pnlOpciones.setOpaque(false);
-        PButton btnProgramar = new PButton("Programar Una Consulta");
-        PButton btnListar = new PButton("Listar Consultas");
+        PButton btnProgramar = new PButton("Programar");
+        PButton btnListar = new PButton("Listar");
         pnlOpciones.add(btnProgramar);
         pnlOpciones.add(btnListar);
         

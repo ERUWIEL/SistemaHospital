@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import interfazGrafica.utilidades.PButton;
 import interfazGrafica.utilidades.PMenuConsultas;
+import interfazGrafica.utilidades.PMenuEquipo;
 import interfazGrafica.utilidades.PMenuMedicos;
 import interfazGrafica.utilidades.PMenuPacientes;
 
@@ -160,7 +161,11 @@ public class SistemaHospital extends JFrame {
         btnEquipo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // pnlContenido = new PMenu();
+                remove(pnlContenido);
+                pnlContenido = new PMenuEquipo();
+                add(pnlContenido, BorderLayout.CENTER);
+                revalidate();
+                repaint();
             }
         });
     }

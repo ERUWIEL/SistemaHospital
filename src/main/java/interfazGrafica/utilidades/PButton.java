@@ -16,7 +16,6 @@ import javax.swing.JPanel;
  * clase de utilidad que ahorrara codigo Panel Button, es un panel que actua como boton PButton!
  */
 public class PButton extends JPanel {
-    private Color colorBoton = new Color(173, 216, 230);
 
     /**
      * recibe la ruta del icono y opcionalmente del titulo del icono para mostrarse
@@ -26,11 +25,10 @@ public class PButton extends JPanel {
     public PButton(String rutaIcono, String etiqueta) {
         // configuraciones de diseño
         super(new BorderLayout());
-        setBackground(colorBoton);
+        setBackground(new Color(173, 216, 230));
         JLabel texto = new JLabel(etiqueta, JLabel.CENTER);
         texto.setFont(new Font("Calibri", Font.BOLD, 18));
-        texto.setForeground(new Color(255, 255, 255));
-        texto.setVisible(false);
+        texto.setForeground(new Color(0, 0, 0));
         add(texto, BorderLayout.CENTER);
 
         // configuracion del icono
@@ -45,20 +43,20 @@ public class PButton extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
                 setBackground(new Color(23, 2, 99));
-                texto.setVisible(true);
+                texto.setForeground(new Color(255, 255, 255));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(colorBoton);
-                texto.setVisible(false);
+                setBackground(new Color(173, 216, 230));
+                texto.setForeground(new Color(0, 0, 0));
             }
         });
     }
 
     public PButton(String etiqueta){
         super();
-        setBackground(colorBoton);
+        setBackground(new Color(23, 2, 99));
         JLabel texto = new JLabel(etiqueta, JLabel.CENTER);
         texto.setFont(new Font("Calibri", Font.BOLD, 18));
         texto.setForeground(new Color(255, 255, 255));
@@ -69,12 +67,14 @@ public class PButton extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
-                setBackground(new Color(23, 2, 99));
+                setBackground(new Color(173, 216, 230));
+                texto.setForeground(new Color(0, 0, 0));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(colorBoton);
+                setBackground(new Color(23, 2, 99));
+                texto.setForeground(new Color(255, 255, 255));
             }
         });
     }
