@@ -14,4 +14,6 @@
 
 # Archivos del sistema
 .DS_Store
-Thumbs.db
+Thumbs.db"/target/" 
+"/.vscode/" 
+"*.class" 
