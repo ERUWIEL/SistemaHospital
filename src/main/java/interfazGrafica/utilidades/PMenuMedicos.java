@@ -1,4 +1,4 @@
-package GUI.utilidades;
+package interfazGrafica.utilidades;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,9 +10,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class PMenuConsultas extends JPanel {
+public class PMenuMedicos extends JPanel {
 
-    public PMenuConsultas() {
+    public PMenuMedicos() {
         super(new BorderLayout());
         setBackground(new Color(3, 2, 54));
 
@@ -22,15 +22,17 @@ public class PMenuConsultas extends JPanel {
         pnlEncabezado.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
 
         // titulo de encabezado
-        JLabel titulo = new JLabel("OPCIONES SOBRE CONSULTAS MEDICAS", JLabel.CENTER);
+        JLabel titulo = new JLabel("OPCIONES SOBRE MEDICOS", JLabel.CENTER);
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("Arial", Font.BOLD, 18));
         // botones de opciones
         JPanel pnlOpciones = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         pnlOpciones.setOpaque(false);
-        PButton btnProgramar = new PButton("Programar Una Consulta");
-        PButton btnListar = new PButton("Listar Consultas");
-        pnlOpciones.add(btnProgramar);
+        PButton btnAgregar = new PButton("Agregar Medicos");
+        PButton btnBuscar = new PButton("Buscar Medicos");
+        PButton btnListar = new PButton("Listar Medicos");
+        pnlOpciones.add(btnAgregar);
+        pnlOpciones.add(btnBuscar);
         pnlOpciones.add(btnListar);
         
         // agregaciones

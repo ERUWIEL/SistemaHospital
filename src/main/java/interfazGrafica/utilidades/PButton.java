@@ -1,4 +1,4 @@
-package GUI.utilidades;
+package interfazGrafica.utilidades;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
