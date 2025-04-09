@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -72,7 +73,7 @@ public class SistemaHospital extends JFrame {
         // configuracion del nav/derecho
         JPanel navDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT, 40, 14));
         navDerecho.setOpaque(false);
-        JLabel titulo = new JLabel("Hospital Santa Maria", JLabel.CENTER);
+        JLabel titulo = new JLabel("Hospital San Jose", JLabel.CENTER);
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("Arial", Font.BOLD, 18));
         PButton imgInformacion = new PButton("src/main/resources/icons/icono-info.png", "");
@@ -89,10 +90,10 @@ public class SistemaHospital extends JFrame {
         JPanel pnlBotones = new JPanel(new GridLayout(4, 1));
         pnlBotones.setPreferredSize(new Dimension(120, getHeight()));
         // botones personalizados
-        PButton btnConsultas = new PButton("src/main/resources/icons/icono-consulta.png", "consultas");
-        PButton btnPacientes = new PButton("src/main/resources/icons/icono-paciente.png", "pacientes");
-        PButton btnDoctores = new PButton("src/main/resources/icons/icono-doctor.png", "doctores");
-        PButton btnEquipo = new PButton("src/main/resources/icons/icono-equipo.png", "equipo medico");
+        PButton btnConsultas = new PButton("src/main/resources/icons/icono-consulta.png", "Consultas");
+        PButton btnPacientes = new PButton("src/main/resources/icons/icono-paciente.png", "Pacientes");
+        PButton btnDoctores = new PButton("src/main/resources/icons/icono-doctor.png", "Medicos");
+        PButton btnEquipo = new PButton("src/main/resources/icons/icono-equipo.png", "Equipo Medico");
         pnlBotones.add(btnConsultas);
         pnlBotones.add(btnPacientes);
         pnlBotones.add(btnDoctores);
@@ -101,10 +102,19 @@ public class SistemaHospital extends JFrame {
 
         // congiguracion del panel central
         JPanel pnlInicio = new JPanel();
+        ImageIcon icono = new ImageIcon("src/main/resources/icons/hospital-img.png");
+        Image iconoFormateado = icono.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+        JLabel lblImagen = new JLabel(new ImageIcon(iconoFormateado));
+        pnlInicio.add(lblImagen);
 
         pnlContenido = pnlInicio;
         add(pnlContenido, BorderLayout.CENTER);
 
+        //pre creacion de instancias para mejor rendimiento
+        JPanel pnlMenuMedico = new PMenuMedicos();
+        JPanel pnlMenuPaciente = new PMenuPacientes();
+        JPanel pnlMenuConsulta = new PMenuConsultas();
+        JPanel pnlMenuEquipo = new PMenuEquipo();
 
         // listeners del nav
         imgMenu.addMouseListener(new MouseAdapter() {
@@ -129,7 +139,7 @@ public class SistemaHospital extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 remove(pnlContenido);
-                pnlContenido = new PMenuConsultas();
+                pnlContenido = pnlMenuConsulta;
                 add(pnlContenido, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -140,7 +150,7 @@ public class SistemaHospital extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 remove(pnlContenido);
-                pnlContenido = new PMenuPacientes();
+                pnlContenido = pnlMenuPaciente;
                 add(pnlContenido, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -151,7 +161,7 @@ public class SistemaHospital extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 remove(pnlContenido);
-                pnlContenido = new PMenuMedicos();
+                pnlContenido = pnlMenuMedico;
                 add(pnlContenido, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -162,7 +172,7 @@ public class SistemaHospital extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 remove(pnlContenido);
-                pnlContenido = new PMenuEquipo();
+                pnlContenido = pnlMenuEquipo;
                 add(pnlContenido, BorderLayout.CENTER);
                 revalidate();
                 repaint();
