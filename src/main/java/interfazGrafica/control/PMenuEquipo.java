@@ -1,9 +1,12 @@
-package interfazGrafica.utilidades;
+package interfazGrafica.control;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-import javax.swing.JPanel; 
+import javax.swing.JPanel;
+
+import interfazGrafica.utilidades.PButton;
+import interfazGrafica.utilidades.PMenu; 
 
 public class PMenuEquipo extends PMenu{
     public PMenuEquipo() {

@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+ 
 /**
  * clase de utilidad que ahorrara codigo Panel Button, es un panel que actua como boton PButton!
  */

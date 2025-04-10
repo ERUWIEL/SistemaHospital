@@ -1,18 +1,23 @@
-package interfazGrafica.utilidades;
+package interfazGrafica.control;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class PMenuConsultas extends PMenu {
+import interfazGrafica.utilidades.PButton;
+import interfazGrafica.utilidades.PMenu;
 
-    public PMenuConsultas() {
-        super("OPCIONES SOBRE CONSULTAS MEDICAS");
+public class PMenuPacientes extends PMenu {
+
+    public PMenuPacientes() {
+        super("OPCIONES SOBRE PACIENTES");
         JPanel pnlOpciones = super.getPanelTop();
-        PButton btnProgramar = new PButton("Programar");
+        PButton btnAgregar = new PButton("Agregar");
+        PButton btnBuscar = new PButton("Buscar");
         PButton btnListar = new PButton("Listar");
-        pnlOpciones.add(btnProgramar);
+        pnlOpciones.add(btnAgregar);
+        pnlOpciones.add(btnBuscar);
         pnlOpciones.add(btnListar);
         super.setPanelOpciones(pnlOpciones);
 

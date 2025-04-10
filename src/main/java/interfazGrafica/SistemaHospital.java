@@ -5,11 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import interfazGrafica.control.PMenuConsultas;
+import interfazGrafica.control.PMenuEquipo;
+import interfazGrafica.control.PMenuMedicos;
+import interfazGrafica.control.PMenuPacientes;
 import interfazGrafica.utilidades.PButton;
-import interfazGrafica.utilidades.PMenuConsultas;
-import interfazGrafica.utilidades.PMenuEquipo;
-import interfazGrafica.utilidades.PMenuMedicos;
-import interfazGrafica.utilidades.PMenuPacientes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
