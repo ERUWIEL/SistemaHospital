@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -46,24 +44,6 @@ public class PMenu extends JPanel{
         pnlEncabezado.add(titulo);
         add(pnlEncabezado, BorderLayout.NORTH);
 
-        //panel de resultados
-        JPanel pnlResultado = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0; // Columna 0
-        gbc.gridy = 0; // Fila 0
-        gbc.gridheight = 4;
-        gbc.gridwidth = 2;
-        pnlResultado.add(new PButton("RESULTADOS"),gbc);
-        //
-        //
-        //
-        // PENDIENTE
-        // 
-        //
-        //
-        //gbc.gr
-
-        add(pnlResultado, BorderLayout.SOUTH);
     }
 
     /**
