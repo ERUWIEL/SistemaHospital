@@ -1,11 +1,13 @@
 
 package entidades;
 
+import java.io.Serializable;
+
 /**
  * clase que modela un paciente
  * @author angel erubiel flores jimenez
  */
-public class Paciente {
+public class Paciente implements Serializable{
     private int id;
     private String nombre;
     private int edad;
