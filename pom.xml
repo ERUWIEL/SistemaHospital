@@ -10,11 +10,4 @@
         <maven.compiler.release>23</maven.compiler.release>
         <exec.mainClass>GUI.SistemaHospital</exec.mainClass>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.mycompany</groupId>
-            <artifactId>entidades</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
