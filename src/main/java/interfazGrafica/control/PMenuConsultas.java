@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,8 +17,13 @@ import javax.swing.JTextArea;
 import interfazGrafica.utilidades.PButton;
 import interfazGrafica.utilidades.PMenu;
 import interfazGrafica.utilidades.PTextField;
+import persistencias.PersistenciaFachada;
 
 public class PMenuConsultas extends PMenu {
+
+    private PersistenciaFachada manegador = new PersistenciaFachada();
+    private String estado;
+    private List<PTextField> entradas = new LinkedList<>();
 
     public PMenuConsultas() {
         super("OPCIONES SOBRE CONSULTAS MEDICAS");
@@ -57,22 +64,35 @@ public class PMenuConsultas extends PMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // formateo del nuevo menu
+                if (estado == "programar") return;
                 pnlContenido.removeAll();
+                estado = "programar";
+                txt.setText("");
+                entradas.clear();
+
+                // creacion del nuevo menu
                 titulo.setText("Programar Nueva Consulta");
                 JPanel pnlEntradas = new JPanel(new GridLayout(2, 2, 20, 10));
                 pnlEntradas.setOpaque(false);
+
                 // contenido de label y texfield
-                JLabel lblText = new JLabel("Nombre", JLabel.RIGHT);
-                lblText.setForeground(new Color(255, 255, 255));
-                PTextField campoTexto = new PTextField();
-                JLabel lblText1 = new JLabel("Direccion", JLabel.RIGHT);
-                lblText1.setForeground(new Color(255, 255, 255));
-                PTextField campoTexto1 = new PTextField();
-                pnlEntradas.add(lblText);
-                pnlEntradas.add(campoTexto);
-                pnlEntradas.add(lblText1);
-                pnlEntradas.add(campoTexto1);
+                JLabel lblNombre = new JLabel("Nombre", JLabel.RIGHT);
+                lblNombre.setForeground(Color.WHITE);
+                PTextField txtNombre = new PTextField();
+
+                JLabel lblDireccion = new JLabel("Direccion", JLabel.RIGHT);
+                lblDireccion.setForeground(Color.WHITE);
+                PTextField txtDireccion = new PTextField();
+
+                pnlEntradas.add(lblNombre);
+                pnlEntradas.add(txtNombre);
+                pnlEntradas.add(lblDireccion);
+                pnlEntradas.add(txtDireccion);
                 pnlEntradas.setBounds(30, 70, 750, 75);
+                
+                //lista de componentes
+                entradas.add(txtNombre);
+                entradas.add(txtDireccion);
 
                 // agregacion y actualizacion
                 pnlContenido.add(titulo);
@@ -89,22 +109,35 @@ public class PMenuConsultas extends PMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // formateo del nuevo menu
+                if (estado == "listar") return;
                 pnlContenido.removeAll();
-                titulo.setText("Programar Nueva Consulta");
+                estado = "listar";
+                txt.setText("");
+                entradas.clear();
+
+                // creacion del nuevo menu
+                titulo.setText("Listar Consultas");
                 JPanel pnlEntradas = new JPanel(new GridLayout(2, 2, 20, 10));
                 pnlEntradas.setOpaque(false);
+
                 // contenido de label y texfield
-                JLabel lblText = new JLabel("Nombre", JLabel.RIGHT);
-                lblText.setForeground(new Color(255, 255, 255));
-                PTextField campoTexto = new PTextField();
-                JLabel lblText1 = new JLabel("Direccion", JLabel.RIGHT);
-                lblText1.setForeground(new Color(255, 255, 255));
-                PTextField campoTexto1 = new PTextField();
-                pnlEntradas.add(lblText);
-                pnlEntradas.add(campoTexto);
-                pnlEntradas.add(lblText1);
-                pnlEntradas.add(campoTexto1);
+                JLabel lblNombre = new JLabel("Nombre", JLabel.RIGHT);
+                lblNombre.setForeground(Color.WHITE);
+                PTextField txtNombre = new PTextField();
+
+                JLabel lblDireccion = new JLabel("Direccion", JLabel.RIGHT);
+                lblDireccion.setForeground(Color.WHITE);
+                PTextField txtDireccion = new PTextField();
+
+                pnlEntradas.add(lblNombre);
+                pnlEntradas.add(txtNombre);
+                pnlEntradas.add(lblDireccion);
+                pnlEntradas.add(txtDireccion);
                 pnlEntradas.setBounds(30, 70, 750, 75);
+                
+                //lista de componentes
+                entradas.add(txtNombre);
+                entradas.add(txtDireccion);
 
                 // agregacion y actualizacion
                 pnlContenido.add(titulo);
@@ -115,6 +148,29 @@ public class PMenuConsultas extends PMenu {
                 pnlContenido.revalidate();
                 pnlContenido.repaint();
             }
+        });
+
+        //boton para cancelar la operacion en curso
+        btnCancelar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                estado = null;
+                pnlContenido.removeAll();
+                txt.setText("");
+                entradas.clear();
+                pnlContenido.revalidate();
+                pnlContenido.repaint();
+            }
+        });
+
+        //boton para egecutar la accion en curso
+        btnAceptar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+                // logica de evento
+
+            }            
         });
     }
 }
