@@ -17,3 +17,6 @@
 Thumbs.db"/target/" 
 "/.vscode/" 
 "*.class" 
+# Archivos Generados Por NeatBeans
+/.metadata/
+/nbproject/private/
