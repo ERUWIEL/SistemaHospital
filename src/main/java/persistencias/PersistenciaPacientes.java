@@ -7,7 +7,12 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import entidades.Paciente;
 import java.io.BufferedReader;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import static java.lang.Integer.parseInt;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -20,7 +25,7 @@ import java.util.List;
  */
 public class PersistenciaPacientes {
     //Ruta abstracta donde se guarda cada paciente 
-    private final Path ruta = Paths.get("SistemaHospital/src/main/resources/pacientes.txt");
+    private final Path ruta = Paths.get("src", "main", "resources", "pacientes.dat");
     
     /**
      * Método que agrega un paciente a un archivo de texto utilizando la clase FileWriter 
@@ -28,10 +33,16 @@ public class PersistenciaPacientes {
      * @throws java.io.IOException
      */
     public void agregarPaciente(Paciente paciente) throws IOException{
-    
-        String linea = paciente.getId() + "-" + paciente.getNombre() + "-" + paciente.getEdad() + "-" + paciente.getDireccion() + "\n";
-        try(FileWriter writer = new FileWriter(ruta.toFile(), true)){
-            writer.write(linea);
+        ObjectOutputStream oss;
+        try(FileOutputStream writer = new FileOutputStream(ruta.toFile(), true)){
+        {
+            if(Files.exists(ruta) && Files.size(ruta) > 0){
+                oss = new MyObjectOutputStream(writer);
+            }else{
+                oss = new ObjectOutputStream(writer);
+            }
+            oss.writeObject(paciente);
+        }
         }catch(IOException ex){
             throw new IOException("Error en el sistema al agregar paciente");
         }
@@ -44,21 +55,28 @@ public class PersistenciaPacientes {
      * @throws java.io.IOException 
      */
     public Paciente consultarPacienteId(int idBuscado) throws IOException{
-        String linea;
-        String[] atributos;
-        try(BufferedReader reader = new BufferedReader(new FileReader(ruta.toFile()))){
-            while((linea = reader.readLine()) != null){
-                atributos = linea.split("-");
-                if(parseInt(atributos[0]) == idBuscado){
-                    Paciente paciente = new Paciente(parseInt(atributos[0]), atributos[1], parseInt(atributos[2]), atributos[3]);
+if (!Files.exists(ruta) || Files.size(ruta) == 0) {
+        return null; // No hay archivo o está vacío
+    }
+
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ruta.toFile()))) {
+        while (true) {
+            try {
+                Paciente paciente = (Paciente) ois.readObject();
+                if (paciente.getId() == idBuscado) {
                     return paciente;
                 }
+            } catch (EOFException e) {
+                break; // Fin del archivo
+            } catch (ClassNotFoundException e) {
+                throw new IOException("No se pudo leer el objeto paciente.");
             }
-            
-        }catch(IOException ex){
-            throw new IOException("Error en el sistema al consultar paciente");
         }
-        return null;
+    } catch (IOException ex) {
+        throw new IOException("Error en el sistema al consultar paciente.");
+    }
+
+    return null; // No se encontró el paciente
     }
     
     public void actualizarPaciente(Paciente nuevoPaciente) throws IOException{
