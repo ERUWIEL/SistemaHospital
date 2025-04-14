@@ -1,15 +1,17 @@
 
 package entidades;
 
-import java.io.Serializable;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * clase que modela un paciente
  * @author angel erubiel flores jimenez
  */
-public class Paciente implements Serializable{
+public class Paciente {
+    private final Pattern PNombre = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{1,50}$"); 
+    private final Pattern PEdad = Pattern.compile("^(120|[0-9]|[1-9][0-9]|1[01][0-9])$"); 
+    private final Pattern PDireccion = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]+$");
+
     private int id;
     private String nombre;
     private int edad;
@@ -68,10 +70,8 @@ public class Paciente implements Serializable{
      * @param nombre
      * @return
      */
-    public boolean validaNombre(String nombre){
-        Pattern pattern = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{1,50}$");
-        Matcher matcher = pattern.matcher(nombre);
-        return matcher.find();
+    public Pattern getPatternNombre(){
+        return PNombre;
     }
 
     /**
@@ -79,10 +79,8 @@ public class Paciente implements Serializable{
      * @param edad
      * @return
      */
-    public boolean validaEdad(int edad){
-        Pattern pattern = Pattern.compile("^(120|[0-9]|[1-9][0-9]|1[01][0-9])$");
-        Matcher matcher = pattern.matcher(String.valueOf(edad));
-        return matcher.find();
+    public Pattern getPatternEdad(){
+        return PEdad;
     }
 
     /**
@@ -90,9 +88,7 @@ public class Paciente implements Serializable{
      * @param direccion
      * @return
      */
-    public boolean validaDireccion(String direccion){
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]+$");
-        Matcher matcher = pattern.matcher(nombre);
-        return matcher.find();
+    public Pattern getPatternDireccion(){
+        return PDireccion;
     }
 }

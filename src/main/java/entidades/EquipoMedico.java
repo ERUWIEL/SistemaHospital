@@ -1,7 +1,6 @@
 
 package entidades;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -9,6 +8,9 @@ import java.util.regex.Pattern;
  * @author angel erubiel flores jimenez
  */
 public class EquipoMedico {
+    private final Pattern PNombre = Pattern.compile("^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑ]{1,30}$");
+    private final Pattern PCantidad = Pattern.compile("^[0-9]+$");
+
     private int id;
     private String nombre;
     private int cantidad;
@@ -52,15 +54,19 @@ public class EquipoMedico {
         this.cantidad = cantidad;
     }
 
-    public boolean validarNombre(String nombre){
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑ]{1,30}$");
-        Matcher matcher = pattern.matcher(nombre);
-        return matcher.find();
+    /**
+     * Metodo que permite consultar el formato valido para el nombre de un equipo
+     * @return formato nombre
+     */
+    public Pattern getPatternNombre(){
+        return PNombre;
     }
 
-    public boolean validaCantidad(int cantidad){
-        Pattern pattern = Pattern.compile("^[0-9]+$");
-        Matcher matcher = pattern.matcher(String.valueOf(cantidad));
-        return matcher.find();
+    /**
+     * Metodo que permite consultar el formato valido para la cantidad de un existencias de un equipo
+     * @return formato cantidad
+     */
+    public Pattern getPatternCantidad(){
+        return PCantidad;
     }
 }
