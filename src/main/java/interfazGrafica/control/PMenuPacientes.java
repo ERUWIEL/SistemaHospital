@@ -20,7 +20,9 @@ import persistencias.PersistenciaFachada;
 
 public class PMenuPacientes extends PMenu {
 
+    @SuppressWarnings("unused")
     private PersistenciaFachada manegador = new PersistenciaFachada();
+    @SuppressWarnings("unused")
     private String estado;
     private List<PTextField> entradas = new LinkedList<>();
 

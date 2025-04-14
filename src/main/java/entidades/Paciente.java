@@ -2,6 +2,8 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * clase que modela un paciente
@@ -59,5 +61,38 @@ public class Paciente implements Serializable{
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    /**
+     * Metodo que valida un nombre con regex solo letras y maxima de 50 caracteres
+     * @param nombre
+     * @return
+     */
+    public boolean validaNombre(String nombre){
+        Pattern pattern = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{1,50}$");
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
+    }
+
+    /**
+     * Metodo que valida una edad con regex positivos de 0 a 120
+     * @param edad
+     * @return
+     */
+    public boolean validaEdad(int edad){
+        Pattern pattern = Pattern.compile("^(120|[0-9]|[1-9][0-9]|1[01][0-9])$");
+        Matcher matcher = pattern.matcher(String.valueOf(edad));
+        return matcher.find();
+    }
+
+    /**
+     * Metodo que valida una direccion con regex positivos de 0 a 120
+     * @param direccion
+     * @return
+     */
+    public boolean validaDireccion(String direccion){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]+$");
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
     }
 }

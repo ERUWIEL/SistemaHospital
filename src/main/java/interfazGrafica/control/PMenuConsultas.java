@@ -21,6 +21,7 @@ import persistencias.PersistenciaFachada;
 
 public class PMenuConsultas extends PMenu {
 
+    @SuppressWarnings("unused")
     private PersistenciaFachada manegador = new PersistenciaFachada();
     private String estado;
     private List<PTextField> entradas = new LinkedList<>();

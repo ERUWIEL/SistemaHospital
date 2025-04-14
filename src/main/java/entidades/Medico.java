@@ -1,6 +1,9 @@
 
 package entidades;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * clase que modela un personal medico
  * @author angel
@@ -47,5 +50,17 @@ public class Medico {
      */
     public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public boolean validaNombre(String nombre){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]{1,50}");
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
+    }
+
+    public boolean validaEspecialidad(Especialidad especialidad){
+        Pattern pattern = Pattern.compile("^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\\s]{1,30}$");
+        Matcher matcher = pattern.matcher(especialidad.getNombre());
+        return matcher.find();
     }
 }

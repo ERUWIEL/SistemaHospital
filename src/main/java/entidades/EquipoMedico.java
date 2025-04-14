@@ -1,6 +1,9 @@
 
 package entidades;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * clase que permite modelar los equipos medicos
  * @author angel erubiel flores jimenez
@@ -47,5 +50,17 @@ public class EquipoMedico {
      */
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public boolean validarNombre(String nombre){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑ]{1,30}$");
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
+    }
+
+    public boolean validaCantidad(int cantidad){
+        Pattern pattern = Pattern.compile("^[0-9]+$");
+        Matcher matcher = pattern.matcher(String.valueOf(cantidad));
+        return matcher.find();
     }
 }
