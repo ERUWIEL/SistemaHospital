@@ -110,7 +110,7 @@ public class SistemaHospital extends JFrame {
         pnlContenido = pnlInicio;
         add(pnlContenido, BorderLayout.CENTER);
 
-        //pre creacion de instancias para mejor rendimiento
+        // pre creacion de instancias para mejor rendimiento
         JPanel pnlMenuMedico = new PMenuMedicos();
         JPanel pnlMenuPaciente = new PMenuPacientes();
         JPanel pnlMenuConsulta = new PMenuConsultas();
@@ -134,7 +134,7 @@ public class SistemaHospital extends JFrame {
             }
         });
 
-        //listener del panel de botones
+        // listener del panel de botones
         btnConsultas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

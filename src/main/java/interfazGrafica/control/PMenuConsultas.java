@@ -150,6 +150,8 @@ public class PMenuConsultas extends PMenu {
             }
         });
 
+
+
         //boton para cancelar la operacion en curso
         btnCancelar.addMouseListener(new MouseAdapter() {
             @Override

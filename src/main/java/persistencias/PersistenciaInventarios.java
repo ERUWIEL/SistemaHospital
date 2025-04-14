@@ -1,128 +1,197 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package persistencias;
 
-import java.io.FileWriter;
+package persistencias;
+import entidades.EquipoMedico;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.EOFException;
+import java.io.FileOutputStream;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import entidades.EquipoMedico;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import static java.lang.Integer.parseInt;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ * clase que implemenenta metodos basicos CRUD en un archivo .dat
  * @author angel
  */
 public class PersistenciaInventarios {
-    //Ruta abstracta donde se guarda cada equipo médico 
-    private Path ruta = Paths.get("SistemaHospital/src/main/resources/inventarios.txt");
-
-    /**
-     * Método que agrega un equipo nédico a un archivo de texto utilizando la clase FileWriter 
-     * @param equipoMedico
-     */
-    public void agregarEquipoMedico(EquipoMedico equipoMedico) throws IOException{
-
-        String linea = equipoMedico.getId() + "-" + equipoMedico.getNombre() + "-" + equipoMedico.getCantidad();
-
-        try(FileWriter writer = new FileWriter(ruta.toFile(), true)){
-            writer.write(linea);
-        } catch (IOException ex) {
-            throw new IOException("Fallo en el sistema al agregar equipo medico");
-        }
-    }
-    
-    public EquipoMedico consultarEquipoMedicoId(int idBuscado) throws IOException {
-        String linea;
-        String[] atributos;
-        try(BufferedReader reader = new BufferedReader(new FileReader(ruta.toFile()))){
-            while((linea = reader.readLine()) != null){
-                atributos = linea.split("-");
-                if(parseInt(atributos[0]) == idBuscado){
-                    EquipoMedico equipoMedico = new EquipoMedico(parseInt(atributos[0]), atributos[1],Integer.parseInt(atributos[2]));
-                    return equipoMedico;
-                }
-            }
-            
-        }catch(IOException ex){
-            throw new IOException("Fallo en el sistema al consultar equipo medico");
-        }
-        return null;
-    }
-    
-    
-    public List<EquipoMedico> consultarInventario(int cantidad) throws IOException{
-        List<EquipoMedico> listaEquipoMedico = null;
-        String[] atributos;
-        try {
-            List<String> lineas = Files.readAllLines(ruta);
-            for (String linea : lineas) {
-                atributos = linea.split("-");
-                if (Integer.parseInt(atributos[2]) == cantidad) {
-                    listaEquipoMedico.add(new EquipoMedico(Integer.parseInt(atributos[0]), atributos[1], Integer.parseInt(atributos[2])));
-                }
-            }
-        } catch (IOException ex) {
-            throw new IOException("Hubo un problema en el sistema");
-        }
-        return listaEquipoMedico;
-    }
-    
-    public List<EquipoMedico> consultarInventario() throws IOException{
-                List<EquipoMedico> listaEquipoMedico = null;
-        String[] atributos;
-        try {
-            List<String> lineas = Files.readAllLines(ruta);
-            for (String linea : lineas) {
-                atributos = linea.split("-");
-                listaEquipoMedico.add(new EquipoMedico(Integer.parseInt(atributos[0]), atributos[1], Integer.parseInt(atributos[2])));
-            }
-        } catch (IOException ex) {
-            throw new IOException("Hubo un problema en el sistema al consultar inventario");
-        }
-        return listaEquipoMedico;
-    }
-    
-    public void inventariarEquipo(){
+    // Ruta abstracta donde se guarda cada equipo médico
+    private Path ruta = Paths.get("src/main/resources/inventarios.txt");
+    public PersistenciaInventarios(){
         
     }
- 
+
     /**
-     * 
-     * @param nuevoEquipo 
-     * @throws java.io.IOException 
+     * Método que agrega un paciente a un archivo de texto utilizando la clase
+     * FileWriter
+     * @param paciente
+     * @throws java.io.IOException
      */
-    public void actualizarInventario(EquipoMedico nuevoEquipo) throws IOException {
-        List<String> nuevasLineas = new ArrayList<>();
-        String[] atributos;
-        try {
-            List<String> lineas = Files.readAllLines(ruta);
-            for (String linea : lineas) {
-                atributos = linea.split("-");
+    public void agregarEquipo(EquipoMedico equipo) throws IOException {
+        // Verificar si no está vacío para settear la propiedad append
+        boolean append = Files.size(ruta) > 0;
+        // si ya existe crea un OOS que no modifica la cabezara si no crea una
+        try (FileOutputStream file = new FileOutputStream(ruta.toFile(), append);
+                ObjectOutputStream oos = append ? new ObjectOutputStream(file) {
+                    @Override
+                    protected void writeStreamHeader() throws IOException {
+                        reset();
+                    }
+                } : new ObjectOutputStream(file)) {
 
-                if (Integer.parseInt(atributos[0]) == nuevoEquipo.getId()) {
-                    String nuevaLinea = nuevoEquipo.getId() + "-" + nuevoEquipo.getNombre() + "-" + nuevoEquipo.getCantidad();
-                    nuevasLineas.add(nuevaLinea);
-                } else {
-                    nuevasLineas.add(linea);
-                }
-
-            }
-            Files.write(ruta, nuevasLineas, StandardOpenOption.TRUNCATE_EXISTING);
-
+            oos.writeObject(equipo);
+            oos.flush();
         } catch (IOException ex) {
-            throw new IOException("Error en el sistema al actualizar inventario");
+            throw new IOException("Error al agregar el equipo medico: " + ex.getMessage(), ex);
         }
-
     }
 
+    /**
+     * Metodo que crea una copia del archivo y copia los elementos a excepcion del
+     * objetivo
+     * donde en lugar de copiar el original copia el nuevo, se copia la base y se
+     * elimina el temporal
+     * 
+     * @param nuevoPaciente
+     * @return
+     * @throws IOException
+     */
+    public boolean actualizarEquipo(EquipoMedico nuevoEquipo) throws IOException {
+        // Verificar si tiene contenido
+        if (Files.size(ruta) == 0) {
+            return false;
+        }
+        // Crear archivo temporal
+        Path tempFile = Files.createTempFile(ruta.getParent(), "temp_equipoMedico", ".tmp");
+        boolean equipoEncontrado = false;
+
+        try {
+            try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(ruta));
+                    ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(tempFile))) {
+                while (true) {
+                    try {
+                        EquipoMedico equipo = (EquipoMedico) ois.readObject();
+                        // Reemplazar si es el paciente a actualizar
+                        if (equipo.getId() == nuevoEquipo.getId()) {
+                            oos.writeObject(nuevoEquipo);
+                            equipoEncontrado = true;
+                        } else {
+                            oos.writeObject(equipo);
+                        }
+                    } catch (EOFException e) {
+                        break; // Fin del archivo
+                    }
+                }
+            }
+            // Solo reemplazar si encontramos el equipo medico
+            if (equipoEncontrado) {
+                Files.move(tempFile, ruta, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (ClassNotFoundException | ClassCastException e) {
+            throw new IOException("Error en el formato de datos", e);
+        } finally {
+            Files.deleteIfExists(tempFile);
+        }
+        return equipoEncontrado;
+    }
+
+    /**
+     * Metodo que crea una copia del archivo y copia los elementos a excepcion del
+     * objetivo
+     * si llega a encontrarse se copia el contenido temporal al base y se elimina la
+     * copia
+     * @param idBuscado
+     * @throws IOException
+     */
+    public void eliminarEquipo(int idBuscado) throws IOException {
+        if (Files.size(ruta) == 0)
+            return;
+        Path tempFile = Files.createTempFile(ruta.getParent(), "temp_equipoMedico", ".tmp");
+        boolean eliminado = false;
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(ruta));
+                ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(tempFile))) {
+            while (true) {
+                try {
+                    EquipoMedico equipo = (EquipoMedico) ois.readObject();
+                    if (equipo.getId() != idBuscado) {
+                        oos.writeObject(equipo);
+                    } else {
+                        eliminado = true;
+                    }
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            if (eliminado) {
+                Files.move(tempFile, ruta, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new IOException("Formato de archivo inválido", e);
+        } finally {
+            Files.deleteIfExists(tempFile);
+        }
+    }
+
+    /**
+     * Método que consulta un paciente mediante id
+     * @param idBuscado
+     * @return un objeto Paciente
+     * @throws java.io.IOException
+     */
+    public EquipoMedico consultarEquipoId(int idBuscado) throws IOException {
+        if (Files.size(ruta) == 0) {
+            return null;
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(ruta))) {
+            while (true) {
+                try {
+                    EquipoMedico equipo = (EquipoMedico) ois.readObject();
+                    if (equipo.getId() == idBuscado) {
+                        return equipo;
+                    }
+                } catch (EOFException e) {
+                    break; // Fin del archivo alcanzado
+                } catch (ClassNotFoundException | ClassCastException e) {
+                    throw new IOException("Formato de datos inválido en el archivo de equipo medico", e);
+                }
+            }
+        } catch (IOException ex) {
+            throw new IOException("Error al leer el archivo de equipo medico: " + ex.getMessage(), ex);
+        }
+        return null; // Equipo no encontrado
+    }
+
+    /**
+     * lista todos los equipos medicos del achivo .dat
+     * @return
+     * @throws IOException
+     */
+    public List<EquipoMedico> listarEquipoMedicos() throws IOException {
+        if (Files.size(ruta) == 0) {
+            return null;
+        }
+        List<EquipoMedico> listaEquipo = new LinkedList<>();
+
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(ruta))) {
+            while (true) {
+                try {
+                    EquipoMedico equipo = (EquipoMedico) ois.readObject();
+                    listaEquipo.add(equipo);
+                } catch (EOFException e) {
+                    break;
+                } catch (ClassNotFoundException | ClassCastException e) {
+                    throw new IOException("Formato de datos inválido en el archivo de equipo medico", e);
+                }
+            }
+        } catch (IOException ex) {
+            throw new IOException("Error al leer el archivo de equipo medico: " + ex.getMessage(), ex);
+        }
+        return listaEquipo;
+    }
 }
