@@ -8,10 +8,12 @@ import java.util.regex.Pattern;
  * @author angel erubiel flores jimenez
  */
 public class Consulta {
+
     private int id; 
     private Paciente paciente;
     private Medico medico;
     private String fecha;
+    
     /**
      * metodo constructor que permite crear una consulta
      * @param id
@@ -54,15 +56,23 @@ public class Consulta {
         return fecha;
     }
 
-    public boolean validaFecha(String fecha){
+    /**
+     * Metodo que permite consultar el formato pattern valido de una fecha en una consulta
+     * @return formato fecha
+     */
+    public static boolean validaFechaConsulta(String fecha){
         Pattern pattern = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])\\/(0[1-9]|1[0-2])\\/([0-9]{4})$");
         Matcher matcher = pattern.matcher(fecha);
         return matcher.find();
     }
 
-    public boolean validaId(int id){
+    /**
+     * Metodo que permite consultar el formato pattern valido de un id en una consulta
+     * @return formato id
+     */
+    public static boolean validaIdConsulta(int id){
         Pattern pattern = Pattern.compile("^[1-9][0-9]*$");
-        Matcher matcher = pattern.matcher(String.valueOf(id));
+        Matcher matcher = pattern.matcher(Integer.toString(id));
         return matcher.find();
     }
 }

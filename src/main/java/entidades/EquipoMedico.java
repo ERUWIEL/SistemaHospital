@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  * @author angel erubiel flores jimenez
  */
 public class EquipoMedico {
+
     private int id;
     private String nombre;
     private int cantidad;
@@ -52,15 +53,23 @@ public class EquipoMedico {
         this.cantidad = cantidad;
     }
 
-    public boolean validarNombre(String nombre){
+    /**
+     * Metodo que permite consultar el formato valido para el nombre de un equipo
+     * @return formato nombre
+     */
+    public static boolean validaNombreEquipo(String nombre){
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑ]{1,30}$");
         Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
     }
 
-    public boolean validaCantidad(int cantidad){
-        Pattern pattern = Pattern.compile("^[0-9]+$");
-        Matcher matcher = pattern.matcher(String.valueOf(cantidad));
+    /**
+     * Metodo que permite consultar el formato valido para la cantidad de un existencias de un equipo
+     * @return formato cantidad
+     */
+    public static boolean validaCantidadEquipo(int cantidad){
+        Pattern pattern = Pattern.compile("^[1-9][0-9]*$");
+        Matcher matcher = pattern.matcher(Integer.toString(cantidad));
         return matcher.find();
     }
 }

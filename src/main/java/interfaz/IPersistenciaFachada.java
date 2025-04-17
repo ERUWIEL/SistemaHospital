@@ -38,7 +38,7 @@ public interface IPersistenciaFachada {
      * @throws excepciones.ObjetoExistenteException 
      * @throws java.io.IOException 
      */
-    abstract void eliminarPaciente(Paciente paciente)throws ObjetoExistenteException, IOException;
+    abstract void eliminarPaciente(int id)throws ObjetoExistenteException, IOException;
     /**
      * Metodo que permite obtener un paciente de la persistencia en base un id
      * @param id
@@ -158,5 +158,5 @@ public interface IPersistenciaFachada {
      * metodo que permite obtener todas las consultas de la persistencia
      * @return 
      */
-    abstract List<Consulta> listarConsultas();
+    abstract List<Consulta> listarConsultas() throws ObjetoExistenteException, IOException;
 }

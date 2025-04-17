@@ -12,6 +12,7 @@ public class Medico {
     private int id;
     private String nombre;
     private Especialidad especialidad;
+
     /**
      * Metodo constructor de un medico
      * @param id
@@ -52,15 +53,23 @@ public class Medico {
         this.especialidad = especialidad;
     }
 
-    public boolean validaNombre(String nombre){
+    /**
+     * Metodo que permite consultar el formato valido para un nombre de medico
+     * @return formato nombre medico
+     */
+    public static boolean validaNombreMedico(String nombre){
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]{1,50}");
         Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
     }
 
-    public boolean validaEspecialidad(Especialidad especialidad){
+    /**
+     * MEtodo que permite consultar el formato calido para un nombre de especialidad medica
+     * @return formato nombre especialidad
+     */
+    public static boolean validaEspecialidad(String especialidad){
         Pattern pattern = Pattern.compile("^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\\s]{1,30}$");
-        Matcher matcher = pattern.matcher(especialidad.getNombre());
+        Matcher matcher = pattern.matcher(especialidad);
         return matcher.find();
     }
 }
