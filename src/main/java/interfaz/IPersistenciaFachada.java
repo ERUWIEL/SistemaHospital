@@ -90,7 +90,7 @@ public interface IPersistenciaFachada {
     abstract void actualizarEspecialidad(Especialidad especialidad)throws ObjetoExistenteException, IOException;
     /**
      * metodo que permite eliminar una especialidad ala persistencia
-     * @param especialidad 
+     * @param id 
      * @throws excepciones.ObjetoExistenteException 
      * @throws java.io.IOException 
      */
@@ -146,9 +146,10 @@ public interface IPersistenciaFachada {
      * @throws java.io.IOException 
      */
     abstract void programarConsulta(Consulta consulta)throws ObjetoExistenteException, IOException;
+    
     /**
      * metodo que permite cancelar  una consulta ala persistencia
-     * @param consulta 
+     * @param id 
      * @throws excepciones.ObjetoExistenteException 
      * @throws java.io.IOException 
      */

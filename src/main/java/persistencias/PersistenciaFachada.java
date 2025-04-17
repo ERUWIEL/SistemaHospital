@@ -23,6 +23,7 @@ public class PersistenciaFachada implements IPersistenciaFachada {
     PersistenciaMedicos persistenciaMedicos = new PersistenciaMedicos();
     PersistenciaEspecialidades persistenciaEspecialidad = new PersistenciaEspecialidades();
     PersistenciaInventarios persistenciaInventarios = new PersistenciaInventarios();
+    PersistenciaConsultas persistenciaConsultas = new PersistenciaConsultas();
 
     public PersistenciaFachada(){}
 
@@ -116,7 +117,7 @@ public class PersistenciaFachada implements IPersistenciaFachada {
     @Override
     public void programarConsulta(Consulta consulta) throws ObjetoExistenteException, IOException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'programarConsulta'");
+        throw new UnsupportedOperationException("Unimplemented method 'desinventariarEquipo'");
     }
     @Override
     public void cancelarConsulta(int id) throws ObjetoExistenteException, IOException {

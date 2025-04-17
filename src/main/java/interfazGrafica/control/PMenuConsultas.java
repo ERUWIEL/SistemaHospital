@@ -1,5 +1,8 @@
 package interfazGrafica.control;
 
+import entidades.Paciente;
+import excepciones.ObjetoInexistenteException;
+import interfaz.IPersistenciaFachada;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,12 +20,15 @@ import javax.swing.JTextArea;
 import interfazGrafica.utilidades.PButton;
 import interfazGrafica.utilidades.PMenu;
 import interfazGrafica.utilidades.PTextField;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import persistencias.PersistenciaFachada;
 
 public class PMenuConsultas extends PMenu {
 
     @SuppressWarnings("unused")
-    private PersistenciaFachada manegador = new PersistenciaFachada();
+    private PersistenciaFachada manejador = new PersistenciaFachada();
     private String estado;
     private List<PTextField> entradas = new LinkedList<>();
 
@@ -171,8 +177,19 @@ public class PMenuConsultas extends PMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 
+                if (estado.equals("programar")){
                 // logica de evento
-
+                IPersistenciaFachada interfaz = null;
+                try {
+                    Paciente pacienteConsulta = interfaz.obtenerPacientePorId(Integer.parseInt(entradas.get(0).getText()));
+                    
+                    //interfaz.programarConsulta();
+                } catch (ObjetoInexistenteException ex) {
+                    Logger.getLogger(PMenuConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(PMenuConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             }            
         });
     }
