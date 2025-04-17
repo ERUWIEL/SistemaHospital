@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -8,14 +9,12 @@ import java.util.regex.Pattern;
  * @author angel erubiel flores jimenez
  */
 public class Paciente {
-    private final Pattern PNombre = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{1,50}$"); 
-    private final Pattern PEdad = Pattern.compile("^(120|[0-9]|[1-9][0-9]|1[01][0-9])$"); 
-    private final Pattern PDireccion = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]+$");
-
+    
     private int id;
     private String nombre;
     private int edad;
     private String direccion;
+    
     /**
      * metodo constructor de un paciente
      * @param id
@@ -70,8 +69,10 @@ public class Paciente {
      * @param nombre
      * @return
      */
-    public Pattern getPatternNombre(){
-        return PNombre;
+    public static boolean validaNombrePaciente(String nombre){
+        Pattern pattern = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]{1,50}$"); 
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
     }
 
     /**
@@ -79,8 +80,10 @@ public class Paciente {
      * @param edad
      * @return
      */
-    public Pattern getPatternEdad(){
-        return PEdad;
+    public static boolean validaEdad(int edad){
+        Pattern pattern = Pattern.compile("^(120|[0-9]|[1-9][0-9]|1[01][0-9])$"); 
+        Matcher matcher = pattern.matcher(Integer.toString(edad));
+        return matcher.find();
     }
 
     /**
@@ -88,7 +91,9 @@ public class Paciente {
      * @param direccion
      * @return
      */
-    public Pattern getPatternDireccion(){
-        return PDireccion;
+    public static boolean validaDireccion(String direccion){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]+$");
+        Matcher matcher = pattern.matcher(direccion);
+        return matcher.find();
     }
 }

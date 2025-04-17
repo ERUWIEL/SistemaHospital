@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import entidades.Consulta;
 import interfazGrafica.control.PMenuConsultas;
 import interfazGrafica.control.PMenuEquipo;
 import interfazGrafica.control.PMenuMedicos;
@@ -36,7 +37,13 @@ public class SistemaHospital extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new SistemaHospital().setVisible(true);
+        //new SistemaHospital().setVisible(true);
+
+        if(Consulta.validaFechaConsulta("10/100/2005")){
+            System.out.println("formato valido!");
+        }else {
+            System.out.println("formato no valido");
+        }
     }
 
     /**

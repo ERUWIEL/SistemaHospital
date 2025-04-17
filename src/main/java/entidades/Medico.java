@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -8,12 +9,10 @@ import java.util.regex.Pattern;
  * @author angel
  */
 public class Medico {
-    private final Pattern PNombre = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]{1,50}");
-    private final Pattern PEspecialidad = Pattern.compile("^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\\s]{1,30}$");
-
     private int id;
     private String nombre;
     private Especialidad especialidad;
+
     /**
      * Metodo constructor de un medico
      * @param id
@@ -58,15 +57,19 @@ public class Medico {
      * Metodo que permite consultar el formato valido para un nombre de medico
      * @return formato nombre medico
      */
-    public Pattern getPatternNombre(){
-        return PNombre;
+    public static boolean validaNombreMedico(String nombre){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]{1,50}");
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
     }
 
     /**
      * MEtodo que permite consultar el formato calido para un nombre de especialidad medica
      * @return formato nombre especialidad
      */
-    public Pattern getPatternEspecialidad(){
-        return PEspecialidad;
+    public static boolean validaEspecialidad(String especialidad){
+        Pattern pattern = Pattern.compile("^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\\s]{1,30}$");
+        Matcher matcher = pattern.matcher(especialidad);
+        return matcher.find();
     }
 }

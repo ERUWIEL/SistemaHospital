@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -7,8 +8,6 @@ import java.util.regex.Pattern;
  * @author angel erubiel flores jimenez
  */
 public class Consulta {
-    private final Pattern PFecha = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])\\/(0[1-9]|1[0-2])\\/([0-9]{4})$");
-    private final Pattern PId = Pattern.compile("^[1-9][0-9]*$");
 
     private int id; 
     private Paciente paciente;
@@ -61,15 +60,19 @@ public class Consulta {
      * Metodo que permite consultar el formato pattern valido de una fecha en una consulta
      * @return formato fecha
      */
-    public Pattern getPatternFecha(){
-        return PFecha;
+    public static boolean validaFechaConsulta(String fecha){
+        Pattern pattern = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])\\/(0[1-9]|1[0-2])\\/([0-9]{4})$");
+        Matcher matcher = pattern.matcher(fecha);
+        return matcher.find();
     }
 
     /**
      * Metodo que permite consultar el formato pattern valido de un id en una consulta
      * @return formato id
      */
-    public Pattern getPatternId(){
-        return PId;
+    public static boolean validaIdConsulta(int id){
+        Pattern pattern = Pattern.compile("^[1-9][0-9]*$");
+        Matcher matcher = pattern.matcher(Integer.toString(id));
+        return matcher.find();
     }
 }
