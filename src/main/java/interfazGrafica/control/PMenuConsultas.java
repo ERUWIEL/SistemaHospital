@@ -1,8 +1,6 @@
 package interfazGrafica.control;
 
-import entidades.Paciente;
-import excepciones.ObjetoInexistenteException;
-import interfaz.IPersistenciaFachada;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,53 +18,108 @@ import javax.swing.JTextArea;
 import interfazGrafica.utilidades.PButton;
 import interfazGrafica.utilidades.PMenu;
 import interfazGrafica.utilidades.PTextField;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import persistencias.PersistenciaFachada;
+
+//import persistencias.PersistenciaFachada;
 
 public class PMenuConsultas extends PMenu {
 
-    @SuppressWarnings("unused")
-    private PersistenciaFachada manejador = new PersistenciaFachada();
+    //botones
+    private PButton btnCancelar;
+    private PButton btnAceptar;
+    private PButton btnProgramar;
+    private PButton btnListar;
+
+    //elementos
+    //private PersistenciaFachada manejador = new PersistenciaFachada();
     private String estado;
     private List<PTextField> entradas = new LinkedList<>();
+    private JLabel titulo;
+    private JScrollPane pnlScroll;
+    private JPanel pnlContenido;
+    private JTextArea areaTexto;
 
+    /**
+     * Metodo constructor que permite ver las opciones, entradas y salidas de Consultas
+     */
     public PMenuConsultas() {
         super("OPCIONES SOBRE CONSULTAS MEDICAS");
         JPanel pnlOpciones = super.getPanelTop();
-        PButton btnProgramar = new PButton("Programar Consulta");
-        PButton btnListar = new PButton("Listar Consultas");
+        btnProgramar = new PButton("Programar Consulta");
+        btnListar = new PButton("Listar Consultas");
         pnlOpciones.add(btnProgramar);
         pnlOpciones.add(btnListar);
         super.setPanelOpciones(pnlOpciones);
 
         // panel del formato
-        JPanel pnlContenido = new JPanel();
+        pnlContenido = new JPanel();
         pnlContenido.setLayout(null);
         pnlContenido.setBackground(new Color(3, 2, 20));
 
         // creacion y posicionamiento del titulo temporal
-        JLabel titulo = new JLabel("");
+        titulo = new JLabel("");
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("Arial", Font.BOLD, 18));
         titulo.setBounds(450, 10, 400, 40);
+
         // creacion y posicionamiento delos botones
-        PButton btnCancelar = new PButton("cancelar");
-        PButton btnAceptar = new PButton("aceptar");
+        btnCancelar = new PButton("cancelar");
+        this.btnAceptar = new PButton("aceptar");
         btnCancelar.setBounds(420, 200, 100, 30);
         btnAceptar.setBounds(680, 200, 100, 30);
+
         // creacion y posicionamiento del panel de salida
-        JTextArea txt = new JTextArea();
-        txt.setBackground(new Color(23, 2, 99));
-        txt.setEditable(false);
-        txt.setFont(new Font("Arial", Font.PLAIN, 12));
-        txt.setForeground(Color.WHITE);
-        JScrollPane pnlScroll = new JScrollPane(txt);
+        areaTexto = new JTextArea();
+        areaTexto.setBackground(new Color(23, 2, 99));
+        areaTexto.setEditable(false);
+        areaTexto.setFont(new Font("Arial", Font.PLAIN, 12));
+        areaTexto.setForeground(Color.WHITE);
+        pnlScroll = new JScrollPane(areaTexto);
         pnlScroll.setBounds(330,300,530,200);
         add(pnlContenido, BorderLayout.CENTER);
 
-        // metodo que permite programar una consulta
+        //inicializacion de botones
+        runBtnCancelar();
+        runBtnAceptar();
+        runBtnProgramar();
+        runBtnListar();
+    }
+
+    /**
+     * Metodo encargado de empezar el boton aceptar y almacenar la logica
+     */
+    private void runBtnAceptar(){
+        
+        //boton para egecutar la accion en curso
+        btnAceptar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+            }            
+        });
+    }
+
+    /**
+     * Metodo encargado de empezar el boton de cancelar y borrar
+     */
+    private void runBtnCancelar(){
+        //boton para cancelar la operacion en curso
+        btnCancelar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                estado = null;
+                pnlContenido.removeAll();
+                areaTexto.setText("");
+                entradas.clear();
+                pnlContenido.revalidate();
+                pnlContenido.repaint();
+            }
+        });
+    }
+
+    /**
+     * metodo que permite programar una consulta graficamente
+     */
+    private void runBtnProgramar(){
         btnProgramar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -74,7 +127,7 @@ public class PMenuConsultas extends PMenu {
                 if (estado == "programar") return;
                 pnlContenido.removeAll();
                 estado = "programar";
-                txt.setText("");
+                areaTexto.setText("");
                 entradas.clear();
 
                 // creacion del nuevo menu
@@ -111,7 +164,12 @@ public class PMenuConsultas extends PMenu {
                 pnlContenido.repaint();
             }
         });
+    }
 
+    /**
+     * Metodo que permite listar las consultas graficamente
+     */
+    private void runBtnListar(){
         btnListar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -119,7 +177,7 @@ public class PMenuConsultas extends PMenu {
                 if (estado == "listar") return;
                 pnlContenido.removeAll();
                 estado = "listar";
-                txt.setText("");
+                areaTexto.setText("");
                 entradas.clear();
 
                 // creacion del nuevo menu
@@ -155,42 +213,6 @@ public class PMenuConsultas extends PMenu {
                 pnlContenido.revalidate();
                 pnlContenido.repaint();
             }
-        });
-
-
-
-        //boton para cancelar la operacion en curso
-        btnCancelar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                estado = null;
-                pnlContenido.removeAll();
-                txt.setText("");
-                entradas.clear();
-                pnlContenido.revalidate();
-                pnlContenido.repaint();
-            }
-        });
-
-        //boton para egecutar la accion en curso
-        btnAceptar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-                if (estado.equals("programar")){
-                // logica de evento
-                IPersistenciaFachada interfaz = null;
-                try {
-                    Paciente pacienteConsulta = interfaz.obtenerPacientePorId(Integer.parseInt(entradas.get(0).getText()));
-                    
-                    //interfaz.programarConsulta();
-                } catch (ObjetoInexistenteException ex) {
-                    Logger.getLogger(PMenuConsultas.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(PMenuConsultas.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            }            
         });
     }
 }

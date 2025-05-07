@@ -1,5 +1,6 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,7 +8,7 @@ import java.util.regex.Pattern;
  * clase que permite modelar una consulta medica
  * @author angel erubiel flores jimenez
  */
-public class Consulta {
+public class Consulta implements Serializable{
 
     private int id; 
     private Paciente paciente;

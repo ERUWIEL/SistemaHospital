@@ -42,12 +42,11 @@ public class PersistenciaPacientes {
                         reset();
                     }
                 } : new ObjectOutputStream(file)) {
-
             oos.writeObject(paciente);
             oos.flush();
         } catch (IOException ex) {
-            throw new IOException("Error al agregar paciente: " + ex.getMessage(), ex);
-        }
+            throw new IOException("Error al agregar paciente: " + ex.getMessage());
+        } 
     }
 
     /**
@@ -154,7 +153,7 @@ public class PersistenciaPacientes {
                 }
             }
         } catch (IOException ex) {
-            throw new IOException("Error al leer el archivo de pacientes: " + ex.getMessage(), ex);
+            throw new IOException("Error al leer el archivo de pacientes: " + ex.getMessage());
         }
         return null; // Paciente no encontrado
     }

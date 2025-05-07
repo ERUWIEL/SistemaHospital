@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+
 /**
  * clase que desarrolla las persistencias
  * 
@@ -35,6 +36,20 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public void agregarPaciente(Paciente paciente) throws ObjetoExistenteException, IOException {
+        // validaciones
+        if(PP.consultarPacienteId(paciente.getId()) != null){
+            throw new ObjetoExistenteException("paciente existente");
+        }
+        if (!Paciente.validaNombrePaciente(paciente.getNombre())){
+            throw new ObjetoExistenteException("nombre de paciente invalido");
+        }
+        if (!Paciente.validaEdad(paciente.getEdad())){
+            throw new ObjetoExistenteException("edad de paciente invalida");
+        }
+        if (!Paciente.validaDireccion(paciente.getDireccion())){
+            throw new ObjetoExistenteException("direccion de paciente invalida");
+        }
+        
         PP.agregarPaciente(paciente);
     }
 
@@ -45,12 +60,20 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public void eliminarPaciente(int id) throws ObjetoExistenteException, IOException {
+        //validacion
+        if(PP.consultarPacienteId(id) == null){
+            throw new ObjetoExistenteException("paciente inexistente");
+        }
         PP.eliminarPaciente(id);
     }
 
     @Override
     public Paciente obtenerPacientePorId(int id) throws ObjetoInexistenteException, IOException {
-        return PP.consultarPacienteId(id);
+        Paciente paciente  = PP.consultarPacienteId(id);
+        if(paciente == null){
+            throw new ObjetoInexistenteException("paciente inexistente");
+        }
+        return paciente;
     }
 
     @Override
@@ -60,7 +83,6 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     public List<Paciente> listarPacientes(Integer edadInicial, Integer edadFinal, String direccion) throws IOException {
         List<Paciente> pacientes = PP.listarPacientes();
-
         return pacientes.stream()
                 .filter(Objects::nonNull)
                 .filter(p -> (edadInicial == null || p.getEdad() >= edadInicial) &&
@@ -82,8 +104,7 @@ public class PersistenciaFachada implements IPersistenciaFachada {
         return PM.consultarMedicoId(id);
     }
 
-    //METODOS DE ESPECIALIDADES
-
+    // METODOS DE ESPECIALIDADES
 
     @Override
     public void agregarEspecialidad(Especialidad especialidad) throws ObjetoExistenteException, IOException {
@@ -110,8 +131,7 @@ public class PersistenciaFachada implements IPersistenciaFachada {
         return PE.listarEspecialidades();
     }
 
-    //METODOS DE EQUIPOS MEDICOS
-
+    // METODOS DE EQUIPOS MEDICOS
 
     @Override
     public EquipoMedico consultarEquipoMedicoId(int id) throws IOException, ObjetoInexistenteException {
@@ -129,10 +149,10 @@ public class PersistenciaFachada implements IPersistenciaFachada {
         EquipoMedico equipo = PI.consultarEquipoId(id);
         int existencias = equipo.getCantidad() - cantidad;
 
-        if (existencias < 0){
+        if (existencias < 0) {
             throw new ObjetoInexistenteException("error: cantidad sobre girada de elementos");
         } else if (existencias == 0) {
-            PI.eliminarEquipo(id); //eliminar si ya no queda nada
+            PI.eliminarEquipo(id); // eliminar si ya no queda nada
         } else {
             PI.actualizarEquipo(new EquipoMedico(id, equipo.getNombre(), cantidad));
         }
@@ -140,12 +160,11 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     // METODOS DE CONSULTAS
 
-
     @Override
     public void programarConsulta(Consulta consulta) throws ObjetoExistenteException, IOException {
         PC.programarConsulta(consulta);
-        
-        throw new UnsupportedOperationException("Unimplemented method 'desinventariarEquipo'"); 
+
+        throw new UnsupportedOperationException("Unimplemented method 'desinventariarEquipo'");
     }
 
     @Override
@@ -154,7 +173,7 @@ public class PersistenciaFachada implements IPersistenciaFachada {
     }
 
     @Override
-    public List<Consulta> listarConsultas() throws ObjetoExistenteException, IOException{
+    public List<Consulta> listarConsultas() throws ObjetoExistenteException, IOException {
         return PC.listarConsultas();
     }
 }

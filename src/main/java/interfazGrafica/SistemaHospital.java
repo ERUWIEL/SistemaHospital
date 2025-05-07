@@ -5,11 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import entidades.Consulta;
-import interfazGrafica.control.PMenuConsultas;
-import interfazGrafica.control.PMenuEquipo;
-import interfazGrafica.control.PMenuMedicos;
-import interfazGrafica.control.PMenuPacientes;
+
+import interfazGrafica.control.*;
 import interfazGrafica.utilidades.PButton;
 
 import java.awt.BorderLayout;
@@ -21,6 +18,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 
 /**
  * clase para iniciar la interfaz grafica
@@ -37,13 +35,7 @@ public class SistemaHospital extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //new SistemaHospital().setVisible(true);
-
-        if(Consulta.validaFechaConsulta("10/100/2005")){
-            System.out.println("formato valido!");
-        }else {
-            System.out.println("formato no valido");
-        }
+        new SistemaHospital().setVisible(true);
     }
 
     /**
@@ -56,7 +48,9 @@ public class SistemaHospital extends JFrame {
         setIconImage(new ImageIcon("src/main/resources/icons/icono-hospital.png").getImage());
         setLayout(new BorderLayout());
         setResizable(false);
-        initComponents();
+
+        add(new PMenuPacientes());
+        //initComponents();
     }
 
     /**

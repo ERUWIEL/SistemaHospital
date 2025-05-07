@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,7 +9,7 @@ import java.util.regex.Pattern;
  * clase que permite modelar los equipos medicos
  * @author angel erubiel flores jimenez
  */
-public class EquipoMedico {
+public class EquipoMedico implements Serializable{
 
     private int id;
     private String nombre;

@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,7 +9,7 @@ import java.util.regex.Pattern;
  * clase que modela un paciente
  * @author angel erubiel flores jimenez
  */
-public class Paciente {
+public class Paciente implements Serializable{
     
     private int id;
     private String nombre;
