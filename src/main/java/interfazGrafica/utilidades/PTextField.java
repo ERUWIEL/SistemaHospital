@@ -14,6 +14,8 @@ import javax.swing.text.PlainDocument;
 
 public class PTextField extends JTextField {
 
+    private boolean isNumber = false;
+
     public PTextField() {
         super();
         setFont(new Font("Calibri", Font.BOLD, 18));
@@ -41,6 +43,7 @@ public class PTextField extends JTextField {
      * Metodo que formatea el componente para solo acepta numeros como entrada
      */
     public void setCampoNumerico() {
+        this.isNumber = true;
         setDocument(new PlainDocument() {
             @Override
             public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
@@ -63,5 +66,21 @@ public class PTextField extends JTextField {
                 }
             }
         });
+    }
+
+    /**
+     * regresa el String en caso de haber contenido null en caso contrario
+     */
+    @Override
+    public String getText() {
+        return (super.getText().isBlank()) ? null : super.getText();
+    }
+
+    /**
+     * regresa el integer en caso de haberlo null en caso contrario
+     * @return
+     */
+    public Integer getInt(){
+        return (super.getText().isBlank() && isNumber) ? null : Integer.parseInt(super.getText());
     }
 }

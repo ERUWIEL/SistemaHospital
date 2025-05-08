@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class PersistenciaConsultas {
     //Ruta abstracta donde se guarda cada equipo médico 
-    private Path ruta = Paths.get("src/main/resources/consultas.txt");
+    private Path ruta = Paths.get("src/main/resources/consultas.dat");
     public PersistenciaConsultas(){
 
     }

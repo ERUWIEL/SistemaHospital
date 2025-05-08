@@ -72,6 +72,7 @@ public interface IPersistenciaFachada {
      */
     abstract Medico obtenerMedicoPorId(int id)throws ObjetoInexistenteException, IOException;
 
+    abstract List<Medico> listarMedicos() throws IOException;
 
     //Definicion de los metodos sobre especialidades
     /**

@@ -352,7 +352,7 @@ public class PMenuPacientes extends PMenu {
                 JLabel lblEdadMax = new JLabel("Edad Maxima", JLabel.RIGHT);
                 lblEdadMax.setForeground(Color.WHITE);
                 PTextField txtEdadMax = new PTextField();
-                txtEdadMin.setCampoNumerico();
+                txtEdadMax.setCampoNumerico();
 
                 pnlEntradas.add(lblDireccion);
                 pnlEntradas.add(txtDireccion);
@@ -397,9 +397,9 @@ public class PMenuPacientes extends PMenu {
      */
     private void agregar() {
         // desempaquetado
-        int id = Integer.parseInt(entradas.get(0).getText());
+        Integer id = entradas.get(0).getInt();
         String nombre = entradas.get(1).getText();
-        int edad = Integer.parseInt(entradas.get(2).getText());
+        Integer edad = entradas.get(2).getInt();
         String direccion = entradas.get(3).getText();
 
         // ejecucion
@@ -412,11 +412,13 @@ public class PMenuPacientes extends PMenu {
     }
 
     private void eliminar() {
-        int id = Integer.parseInt(entradas.get(0).getText());
+        Integer id = entradas.get(0).getInt();
         // ejecucion
         try {
             Paciente p = manegador.obtenerPacientePorId(id);
-            if (new POptionPane("Desea Eliminar Permanentemente a:\n" + p.getNombre()).confirmacion()) {
+            String informacion = "ID: " + p.getId() + "\nNombre: " + p.getNombre() + "\nEdad: " + p.getEdad()
+            + "\nDireccion: " + p.getDireccion();
+            if (new POptionPane("Desea Eliminar Permanentemente a:\n" + informacion).confirmacion()) {
                 manegador.eliminarPaciente(id);
                 new POptionPane("paciente eliminado").notificar();
             }
@@ -426,7 +428,7 @@ public class PMenuPacientes extends PMenu {
     }
 
     private void actualizar() {
-        int id = Integer.parseInt(entradas.get(0).getText());
+        Integer id = entradas.get(0).getInt();
         // ejecucion
         try {
             Paciente p = manegador.obtenerPacientePorId(id);
@@ -445,7 +447,7 @@ public class PMenuPacientes extends PMenu {
     }
 
     private void consultar() {
-        int id = Integer.parseInt(entradas.get(0).getText());
+        Integer id = entradas.get(0).getInt();
         // ejecucion
         try {
             Paciente p = manegador.obtenerPacientePorId(id);
@@ -460,17 +462,12 @@ public class PMenuPacientes extends PMenu {
     private void listar() {
         // desempaquetado
         String direccion = entradas.get(0).getText();
-        String edadMin = entradas.get(1).getText();;
-        String edadMax = entradas.get(2).getText();;
+        Integer edadMin = entradas.get(1).getInt();;
+        Integer edadMax = entradas.get(2).getInt();;
 
-        // castteo
-        direccion = (direccion.isBlank()) ? null : direccion;
-        Integer min = (edadMin.isBlank()) ? null : Integer.parseInt(edadMin);
-        Integer max = (edadMax.isBlank()) ? null : Integer.parseInt(edadMax);
-        
         //operacion
         try {
-            List<Paciente> lista = manegador.listarPacientes(min, max, direccion);
+            List<Paciente> lista = manegador.listarPacientes(edadMin, edadMax, direccion);
             tabla.setDatos(lista);
         } catch (Exception ex) {
             new POptionPane(ex.getMessage()).error();

@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class PersistenciaEspecialidades {
     //Ruta abstracta donde se guarda cada equipo médico 
-    private Path ruta = Paths.get("src/main/resources/especialidades.txt");
+    private Path ruta = Paths.get("src/main/resources/especialidades.dat");
     
     /**
      * Método que agrega una especialidad a un archivo de texto utilizando la clase

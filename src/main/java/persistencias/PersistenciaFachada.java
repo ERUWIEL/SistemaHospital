@@ -96,12 +96,28 @@ public class PersistenciaFachada implements IPersistenciaFachada {
 
     @Override
     public void agregarMedico(Medico medico) throws ObjetoExistenteException, IOException {
+
+        if(PM.consultarMedicoId(medico.getId()) != null){
+            throw new ObjetoExistenteException("medico existente");
+        }
+        if (!Medico.validaNombreMedico(medico.getNombre())){
+            throw new ObjetoExistenteException("nombre de medico invalido");
+        }
+        if (!Medico.validaEspecialidad(medico.getEspecialidad().getNombre())){
+            throw new ObjetoExistenteException("especialidad de medico invalida");
+        }
+
         PM.agregarMedico(medico);
     }
 
     @Override
     public Medico obtenerMedicoPorId(int id) throws ObjetoInexistenteException, IOException {
         return PM.consultarMedicoId(id);
+    }
+
+    @Override
+    public List<Medico> listarMedicos() throws IOException {
+        return PM.listarMedicos();
     }
 
     // METODOS DE ESPECIALIDADES
@@ -176,4 +192,5 @@ public class PersistenciaFachada implements IPersistenciaFachada {
     public List<Consulta> listarConsultas() throws ObjetoExistenteException, IOException {
         return PC.listarConsultas();
     }
+
 }
