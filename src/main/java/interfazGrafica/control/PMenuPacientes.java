@@ -128,6 +128,7 @@ public class PMenuPacientes extends PMenu {
         });
     }
 
+
     /**
      * metodo que permite agregar un paciente graficamente
      */
@@ -392,6 +393,7 @@ public class PMenuPacientes extends PMenu {
         });
     }
 
+    
     /**
      * metodo que permite agregar un paciente logicamente
      */
@@ -459,7 +461,7 @@ public class PMenuPacientes extends PMenu {
         }
     }
 
-    private void listar() {
+    private void listar() { 
         // desempaquetado
         String direccion = entradas.get(0).getText();
         Integer edadMin = entradas.get(1).getInt();;

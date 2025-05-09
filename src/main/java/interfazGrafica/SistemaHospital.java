@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 import interfazGrafica.control.*;
 import interfazGrafica.utilidades.PButton;
 

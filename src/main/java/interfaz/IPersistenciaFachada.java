@@ -52,7 +52,7 @@ public interface IPersistenciaFachada {
      * @return 
      * @throws java.io.IOException 
      */
-    abstract List<Paciente> listarPacientes()throws IOException;
+    abstract List<Paciente> listarPacientes(Integer edadInicial, Integer edadFinal, String direccion)throws IOException;
     
 
     //Definicion de los metodos sobre medicos
@@ -82,20 +82,6 @@ public interface IPersistenciaFachada {
      * @throws java.io.IOException 
      */
     abstract void agregarEspecialidad(Especialidad especialidad)throws ObjetoExistenteException, IOException;
-    /**
-     * metodo que permite modificar una especialidad ala persistencia
-     * @param especialidad 
-     * @throws excepciones.ObjetoExistenteException 
-     * @throws java.io.IOException 
-     */
-    abstract void actualizarEspecialidad(Especialidad especialidad)throws ObjetoExistenteException, IOException;
-    /**
-     * metodo que permite eliminar una especialidad ala persistencia
-     * @param id 
-     * @throws excepciones.ObjetoExistenteException 
-     * @throws java.io.IOException 
-     */
-    abstract void eliminarEspecialidad(int id)throws ObjetoExistenteException, IOException;
     /**
      * metodo que permite obtener una especialidad de la persistencia en base un id
      * @param id
@@ -130,14 +116,24 @@ public interface IPersistenciaFachada {
      */
     abstract void inventariarEquipo(int id, int cantidad)throws ObjetoInexistenteException, IOException;
     /**
-     * 
+     * metodo para reducir el stock de inventario
      * @param id
      * @param cantidad
      * @throws ObjetoInexistenteException
      * @throws IOException 
      */
     abstract void desinventariarEquipo(int id, int cantidad)throws ObjetoInexistenteException, IOException;
-    
+    /**
+     * metodo para registra un nuevo tipo de equipo medico
+     * @param id
+     * @param nombre
+     * @param cantidad
+     * @throws IOException
+     */
+    abstract void registrarEquipo(EquipoMedico equipo)throws ObjetoExistenteException, IOException;
+
+    abstract List<EquipoMedico> listarEquipos(Integer id) throws IOException;
+
 
     //Definicion de los metodos sobre consultas
     /**
@@ -151,13 +147,15 @@ public interface IPersistenciaFachada {
     /**
      * metodo que permite cancelar  una consulta ala persistencia
      * @param id 
-     * @throws excepciones.ObjetoExistenteException 
+     * @throws excepciones.ObjetoInexistenteException 
      * @throws java.io.IOException 
      */
-    abstract void cancelarConsulta(int id)throws ObjetoExistenteException, IOException;
+    abstract void cancelarConsulta(int id)throws ObjetoInexistenteException, IOException;
     /**
      * metodo que permite obtener todas las consultas de la persistencia
      * @return 
      */
-    abstract List<Consulta> listarConsultas() throws ObjetoExistenteException, IOException;
+    abstract List<Consulta> listarConsultas(Integer idMedico, Integer idPaciente, String fechaInicio, String fechaFin) throws ObjetoExistenteException, IOException;
+
+    abstract Consulta obtenerConsultaPorId(int id) throws ObjetoExistenteException, IOException;
 }
