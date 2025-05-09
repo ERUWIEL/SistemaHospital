@@ -52,7 +52,7 @@ public interface IPersistenciaFachada {
      * @return 
      * @throws java.io.IOException 
      */
-    abstract List<Paciente> listarPacientes(Integer edadInicial, Integer edadFinal, String direccion)throws IOException;
+    abstract List<Paciente> listarPacientes(Integer edadInicial, Integer edadFinal, String direccion, String patron)throws IOException;
     
 
     //Definicion de los metodos sobre medicos
@@ -155,7 +155,7 @@ public interface IPersistenciaFachada {
      * metodo que permite obtener todas las consultas de la persistencia
      * @return 
      */
-    abstract List<Consulta> listarConsultas(Integer idMedico, Integer idPaciente, String fechaInicio, String fechaFin) throws ObjetoExistenteException, IOException;
+    abstract List<Consulta> listarConsultas(Integer idMedico, Integer idPaciente, String fechaInicio, String fechaFin, String patron) throws ObjetoExistenteException, IOException;
 
     abstract Consulta obtenerConsultaPorId(int id) throws ObjetoExistenteException, IOException;
 }

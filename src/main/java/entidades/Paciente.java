@@ -19,7 +19,7 @@ public class Paciente implements Serializable{
     /**
      * metodo constructor de un paciente
      * @param id
-     * @param nombre
+     * @param nombrePaciente
      * @param edad
      * @param direccion 
      */
@@ -95,6 +95,12 @@ public class Paciente implements Serializable{
     public static boolean validaDireccion(String direccion){
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,]+$");
         Matcher matcher = pattern.matcher(direccion);
+        return matcher.find();
+    }
+
+    public boolean buscarPorNombre(String patron){
+        Pattern pattern = Pattern.compile(patron, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
     }
 }

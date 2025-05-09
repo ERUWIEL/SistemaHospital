@@ -47,7 +47,8 @@ public class SistemaHospital extends JFrame {
         setIconImage(new ImageIcon("src/main/resources/icons/icono-hospital.png").getImage());
         setLayout(new BorderLayout());
         setResizable(false);
-        initComponents();
+        add(new PMenuConsultas());
+        //initComponents();
     }
 
     /**

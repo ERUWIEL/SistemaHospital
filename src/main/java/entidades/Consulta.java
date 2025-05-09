@@ -76,4 +76,10 @@ public class Consulta implements Serializable{
         Matcher matcher = pattern.matcher(Integer.toString(id));
         return matcher.find();
     }
+
+    public boolean buscarConsultasPorFecha(String fechaBuscada){
+        Pattern pattern = Pattern.compile(fechaBuscada);
+        Matcher matcher = pattern.matcher(fecha);
+        return matcher.find();
+    }
 }

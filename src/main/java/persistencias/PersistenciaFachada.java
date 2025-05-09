@@ -75,14 +75,14 @@ public class PersistenciaFachada implements IPersistenciaFachada {
     }
 
     @Override
-    public List<Paciente> listarPacientes(Integer edadInicial, Integer edadFinal, String direccion) throws IOException {
+    public List<Paciente> listarPacientes(Integer edadInicial, Integer edadFinal, String direccion, String patron) throws IOException {
         List<Paciente> pacientes = PP.listarPacientes();
         return pacientes.stream()
                 .filter(Objects::nonNull)
-                .filter(p -> (edadInicial == null || p.getEdad() >= edadInicial) &&
-                        (edadFinal == null || p.getEdad() <= edadFinal) &&
-                        (direccion == null ||
-                                (p.getDireccion() != null && p.getDireccion().equalsIgnoreCase(direccion))))
+                .filter(p -> (direccion == null || (p.getDireccion() != null && p.getDireccion().equalsIgnoreCase(direccion))))
+                .filter(p -> (edadFinal == null || p.getEdad() <= edadFinal))
+                .filter(p -> (edadInicial == null || p.getEdad() >= edadInicial))
+                .filter(p -> (patron == null || p.buscarPorNombre(patron)))
                 .collect(Collectors.toList());
     }
 
@@ -224,14 +224,13 @@ public class PersistenciaFachada implements IPersistenciaFachada {
         PC.cancelarConsulta(id);
     }
     @Override
-    public List<Consulta> listarConsultas(Integer idMedico, Integer idPaciente, String fechaInicio, String fechaFin)
-            throws ObjetoExistenteException, IOException {
+    public List<Consulta> listarConsultas(Integer idMedico, Integer idPaciente, String fechaInicio, String fechaFin, String patron) throws ObjetoExistenteException, IOException {
         List<Consulta> consultas = PC.listarConsultas();
         return consultas.stream()
                 .filter(Objects::nonNull)
                 .filter(c -> (idMedico == null || c.getMedico().getId() == idMedico))
                 .filter(c -> (idPaciente == null || c.getPaciente().getId() == idPaciente))
-                .filter(c -> { //filtro para fechas insano vivan las labmdas!
+                .filter(c -> { //filtro en caso de dar un periodo de tiempo
                     if (fechaInicio == null || fechaFin == null) {
                         return true;
                     }
@@ -268,6 +267,7 @@ public class PersistenciaFachada implements IPersistenciaFachada {
                     }
                     return true;
                 })
+                .filter(c -> (patron == null || c.buscarConsultasPorFecha(patron)))
                 .collect(Collectors.toList());
     }
     @Override

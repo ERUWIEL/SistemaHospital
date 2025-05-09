@@ -337,7 +337,7 @@ public class PMenuPacientes extends PMenu {
 
                 // creacion del nuevo menu
                 titulo.setText("Listar Pacientes Existentes");
-                JPanel pnlEntradas = new JPanel(new GridLayout(3, 2, 20, 10));
+                JPanel pnlEntradas = new JPanel(new GridLayout(4, 2, 20, 10));
                 pnlEntradas.setOpaque(false);
 
                 // contenido de label y texfield
@@ -355,13 +355,20 @@ public class PMenuPacientes extends PMenu {
                 PTextField txtEdadMax = new PTextField();
                 txtEdadMax.setCampoNumerico();
 
+                JLabel lblPatron = new JLabel("Patron", JLabel.RIGHT);
+                lblPatron.setForeground(Color.WHITE);
+                PTextField txtPatron = new PTextField();
+                txtPatron.setCampoLetra();
+
                 pnlEntradas.add(lblDireccion);
                 pnlEntradas.add(txtDireccion);
                 pnlEntradas.add(lblEdadMin);
                 pnlEntradas.add(txtEdadMin);
                 pnlEntradas.add(lblEdadMax);
                 pnlEntradas.add(txtEdadMax);
-                pnlEntradas.setBounds(30, 70, 750, 105);
+                pnlEntradas.add(lblPatron);
+                pnlEntradas.add(txtPatron);
+                pnlEntradas.setBounds(30, 70, 750, 150);
 
                 // crear una tabla con columnas personalizadas
                 List<PTable.Columna<Paciente>> columnas = Arrays.asList(
@@ -374,12 +381,14 @@ public class PMenuPacientes extends PMenu {
                 pnlScroll.setBounds(300, 300, 580, 200);
 
                 // actualizacion de posicion de botones
-                btnLimpiar.setBounds(420, 200, 100, 30);
-                btnAceptar.setBounds(680, 200, 100, 30);
+                btnLimpiar.setBounds(420, 235, 100, 30);
+                btnAceptar.setBounds(680, 235, 100, 30);
                 // lista de componentes
+                
                 entradas.add(txtDireccion);
                 entradas.add(txtEdadMin);
                 entradas.add(txtEdadMax);
+                entradas.add(txtPatron);
 
                 // agregacion y actualizacion
                 pnlContenido.add(titulo);
@@ -464,12 +473,12 @@ public class PMenuPacientes extends PMenu {
     private void listar() { 
         // desempaquetado
         String direccion = entradas.get(0).getText();
-        Integer edadMin = entradas.get(1).getInt();;
-        Integer edadMax = entradas.get(2).getInt();;
-
+        Integer edadMin = entradas.get(1).getInt();
+        Integer edadMax = entradas.get(2).getInt();
+        String patron = entradas.get(3).getText();
         //operacion
         try {
-            List<Paciente> lista = manegador.listarPacientes(edadMin, edadMax, direccion);
+            List<Paciente> lista = manegador.listarPacientes(edadMin, edadMax, direccion, patron);
             tabla.setDatos(lista);
         } catch (Exception ex) {
             new POptionPane(ex.getMessage()).error();

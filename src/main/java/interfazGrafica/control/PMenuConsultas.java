@@ -198,7 +198,7 @@ public class PMenuConsultas extends PMenu {
 
                 // creacion del nuevo menu
                 titulo.setText("Listar Consultas Agendadas");
-                JPanel pnlEntradas = new JPanel(new GridLayout(4, 2, 20, 10));
+                JPanel pnlEntradas = new JPanel(new GridLayout(5, 2, 20, 10));
                 pnlEntradas.setOpaque(false);
 
                 // contenido de label y texfield
@@ -221,6 +221,11 @@ public class PMenuConsultas extends PMenu {
                 PTextField txtFechaFinal = new PTextField();
                 txtFechaFinal.setCampoFecha();
   
+                JLabel lblPatron = new JLabel("Patron", JLabel.RIGHT);
+                lblPatron.setForeground(Color.WHITE);
+                PTextField txtPatron = new PTextField();
+                txtPatron.setCampoFecha();
+
                 pnlEntradas.add(lblIdPaciente);
                 pnlEntradas.add(txtIdPaciente);
                 pnlEntradas.add(lblIdMedico);
@@ -229,7 +234,9 @@ public class PMenuConsultas extends PMenu {
                 pnlEntradas.add(txtFechaInicial);
                 pnlEntradas.add(lblFechaFinal);
                 pnlEntradas.add(txtFechaFinal);
-                pnlEntradas.setBounds(30, 70, 750, 150);
+                pnlEntradas.add(lblPatron);
+                pnlEntradas.add(txtPatron);
+                pnlEntradas.setBounds(30, 70, 750, 175);
 
                 // crear una tabla con columnas personalizadas
 
@@ -243,13 +250,14 @@ public class PMenuConsultas extends PMenu {
                 pnlScroll.setBounds(300, 300, 580, 200);
 
                 // actualizacion de posicion de botones
-                btnLimpiar.setBounds(420, 240, 100, 30);
-                btnAceptar.setBounds(680, 240, 100, 30);
+                btnLimpiar.setBounds(420, 255, 100, 30);
+                btnAceptar.setBounds(680, 255, 100, 30);
                 // lista de componentes
                 entradas.add(txtIdPaciente);
                 entradas.add(txtIdMedico);
                 entradas.add(txtFechaInicial);
                 entradas.add(txtFechaFinal);
+                entradas.add(txtPatron);
 
                 // agregacion y actualizacion
                 pnlContenido.add(titulo);
@@ -328,10 +336,11 @@ public class PMenuConsultas extends PMenu {
         Integer idPaciente = entradas.get(1).getInt();
         String fechaInicio = entradas.get(2).getText();
         String fechaFin = entradas.get(3).getText();
+        String patron = entradas.get(4).getText();
 
         //operacion
         try {
-            List<Consulta> lista = manejador.listarConsultas(idMedico, idPaciente, fechaInicio, fechaFin);
+            List<Consulta> lista = manejador.listarConsultas(idMedico, idPaciente, fechaInicio, fechaFin, patron);
             tabla.setDatos(lista);
         } catch (Exception ex) {
             new POptionPane(ex.getMessage()).error();
